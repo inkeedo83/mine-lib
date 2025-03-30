@@ -1,0 +1,1 @@
+export { bootstrapTelemetry } from "./tracing";
