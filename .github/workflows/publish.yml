@@ -1,0 +1,51 @@
+name: Publish Package to Nexus
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.x"
+          registry-url: "http://localhost:8081/repository/npm-local/"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Prepare package for publishing
+        run: |
+          # Create a temporary directory for the package
+          mkdir -p temp_publish
+
+          # Copy package.json to the temp directory
+          cp package.json temp_publish/
+
+          # Copy README.md if it exists
+          if [ -f README.md ]; then cp README.md temp_publish/; fi
+
+          # Copy dist directory content
+          cp -r dist/* temp_publish/
+
+          # Copy any other necessary files (like LICENSE if exists)
+          if [ -f LICENSE ]; then cp LICENSE temp_publish/; fi
+
+      - name: Publish to Nexus
+        run: |
+          cd temp_publish
+          echo "//localhost:8081/repository/npm-local/:_auth=$(echo -n ${{ secrets.NEXUS_USERNAME }}:${{ secrets.NEXUS_PASSWORD }} | base64)" > .npmrc
+          echo "registry=http://localhost:8081/repository/npm-local/" >> .npmrc
+          echo "always-auth=true" >> .npmrc
+          npm publish

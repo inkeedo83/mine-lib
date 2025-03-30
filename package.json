@@ -31,7 +31,6 @@
     "prepublishOnly": "npm run build",
     "prebuild": "rimraf dist",
     "build": "tsc",
-    "postinstall": "npm run build",
     "postpublish": "echo 'Published successfully'"
   },
   "dependencies": {
