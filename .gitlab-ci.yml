@@ -1,0 +1,47 @@
+image: node:20-alpine
+
+stages:
+  - build
+  - publish
+
+cache:
+  paths:
+    - node_modules/
+
+build:
+  stage: build
+  script:
+    - npm install --no-audit --no-fund
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+      - package.json
+      - README.md
+      - LICENSE
+
+publish:
+  stage: publish
+  script:
+    # Создаем временную директорию для публикации
+    - mkdir -p temp_publish
+
+    # Копируем необходимые файлы
+    - cp package.json temp_publish/
+    - cp -r dist/* temp_publish/
+    - if [ -f README.md ]; then cp README.md temp_publish/; fi
+    - if [ -f LICENSE ]; then cp LICENSE temp_publish/; fi
+
+    # Создаем .npmrc файл для Nexus
+    - cd temp_publish
+    - |
+      echo "//localhost:8081/repository/npm-local/:_auth=$(echo -n ${NEXUS_USERNAME}:${NEXUS_PASSWORD} | base64)" > .npmrc
+      echo "registry=http://localhost:8081/repository/npm-local/" >> .npmrc
+      echo "always-auth=true" >> .npmrc
+
+    # Публикуем пакет
+    - npm publish
+  only:
+    - main
+  needs:
+    - build
