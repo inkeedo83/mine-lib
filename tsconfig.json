@@ -17,6 +17,12 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "baseUrl": ".",
+    "paths": {
+      "@mine": ["./src/index"],
+      "@mine/prisma": ["./src/prisma/index"],
+      "@mine/telemetry": ["./src/telemetry/index"]
+    }
   }
 }

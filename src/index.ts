@@ -1,2 +1,2 @@
-export * as prisma from "./prisma/index";
-export * as telemetry from "./telemetry/index";
+export * from "./prisma/index";
+export * from "./telemetry/index";
