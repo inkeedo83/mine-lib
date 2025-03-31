@@ -20,7 +20,7 @@
     "noFallthroughCasesInSwitch": false,
     "baseUrl": ".",
     "paths": {
-      "@mine": ["./src/index"],
+      "@mine/core": ["./src/index"],
       "@mine/prisma": ["./src/prisma/index"],
       "@mine/telemetry": ["./src/telemetry/index"]
     }
