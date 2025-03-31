@@ -21,8 +21,6 @@
     "baseUrl": ".",
     "paths": {
       "@mine/core": ["./src/index"],
-      "@mine/prisma": ["./src/prisma/index"],
-      "@mine/telemetry": ["./src/telemetry/index"]
     }
   }
 }
