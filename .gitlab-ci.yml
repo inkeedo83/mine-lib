@@ -4,14 +4,10 @@ stages:
   - build
   - publish
 
-cache:
-  paths:
-    - node_modules/
-
 build:
   stage: build
   script:
-    - npm install --no-audit --no-fund
+    - npm ci
     - npm run build
   artifacts:
     paths:
