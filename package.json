@@ -29,7 +29,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "prebuild": "rimraf dist",
+    "prebuild": "rm -rf dist",
     "build": "tsc",
     "postpublish": "echo 'Published successfully'"
   },
@@ -38,8 +38,6 @@
     "@nestjs/common": "^11.0.11",
     "@nestjs/config": "^4.0.1",
     "@nestjs/core": "^11.0.11",
-    "axios": "^1.8.4",
-    "form-data": "^4.0.2",
     "@opentelemetry/exporter-logs-otlp-http": "^0.57.2",
     "@opentelemetry/exporter-metrics-otlp-http": "^0.57.2",
     "@opentelemetry/exporter-trace-otlp-http": "^0.57.2",
@@ -55,19 +53,22 @@
     "@prisma/client": "^6.5.0",
     "@prisma/instrumentation": "^6.5.0",
     "@types/express": "^5.0.1",
+    "axios": "^1.8.4",
+    "form-data": "^4.0.2",
     "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.5.0",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
-    "prisma": "^6.5.0"
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "22.13.10",
+    "rimraf": "^6.0.1",
     "source-map-support": "0.5.21",
     "ts-loader": "9.5.2",
     "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.8.2",
-    "rimraf": "^6.0.1"
+    "typescript": "5.8.2"
   }
 }

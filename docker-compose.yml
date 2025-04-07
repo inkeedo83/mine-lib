@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  build:
+    image: node:22-alpine
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: >
+      sh -c "npm ci --include=dev && 
+      npx tsc && 
+      mkdir -p temp_publish && 
+      cp package.json temp_publish/ && 
+      cp package-lock.json temp_publish/ && 
+      cp -r dist/* temp_publish/ && 
+      if [ -f README.md ]; then cp README.md temp_publish/; fi && 
+      if [ -f LICENSE ]; then cp LICENSE temp_publish/; fi"
+
+  publish:
+    image: node:22-alpine
+    volumes:
+      - .:/app
+    working_dir: /app
+    depends_on:
+      - build
+    environment:
+      - NEXUS_USERNAME=${NEXUS_USERNAME:-pusher}
+      - NEXUS_PASSWORD=${NEXUS_PASSWORD:-pusher}
+    command: >
+      sh -c "cd temp_publish && 
+      npm install --include=dev && 
+      echo '//localhost:8081/repository/npm-local/:_auth='$(echo -n ${NEXUS_USERNAME}:${NEXUS_PASSWORD} | base64) > .npmrc && 
+      echo 'registry=http://localhost:8081/repository/npm-local/' >> .npmrc && 
+      echo 'always-auth=true' >> .npmrc && 
+      npm publish --ignore-scripts"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

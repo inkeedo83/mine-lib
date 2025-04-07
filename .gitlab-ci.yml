@@ -8,11 +8,12 @@ build:
   stage: build
   script:
     - npm ci --include=dev
-    - npm run build
+    - npx tsc
   artifacts:
     paths:
       - dist/
       - package.json
+      - package-lock.json
       - README.md
       - LICENSE
 
@@ -24,6 +25,7 @@ publish:
 
     # Копируем необходимые файлы
     - cp package.json temp_publish/
+    - cp package-lock.json temp_publish/
     - cp -r dist/* temp_publish/
     - if [ -f README.md ]; then cp README.md temp_publish/; fi
     - if [ -f LICENSE ]; then cp LICENSE temp_publish/; fi
@@ -36,7 +38,7 @@ publish:
       echo "always-auth=true" >> .npmrc
 
     # Публикуем пакет
-    - npm publish
+    - npm publish --ignore-scripts
   only:
     - main
   needs:
