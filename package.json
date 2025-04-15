@@ -24,6 +24,9 @@
     },
     "./package.json": "./package.json"
   },
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "registry": "http://localhost:8081/repository/npm-local/"
   },
