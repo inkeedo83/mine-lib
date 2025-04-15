@@ -1,32 +1,29 @@
 {
   "name": "@mine/core",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "",
   "author": "",
   "type": "commonjs",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./index.js",
+      "require": "./index.js",
+      "types": "./index.d.ts"
     },
     "./prisma": {
-      "import": "./dist/prisma/index.js",
-      "require": "./dist/prisma/index.js",
-      "types": "./dist/prisma/index.d.ts"
+      "import": "./prisma/index.js",
+      "require": "./prisma/index.js",
+      "types": "./prisma/index.d.ts"
     },
     "./telemetry": {
-      "import": "./dist/telemetry/index.js",
-      "require": "./dist/telemetry/index.js",
-      "types": "./dist/telemetry/index.d.ts"
+      "import": "./telemetry/index.js",
+      "require": "./telemetry/index.js",
+      "types": "./telemetry/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist"
-  ],
   "publishConfig": {
     "registry": "http://localhost:8081/repository/npm-local/"
   },
